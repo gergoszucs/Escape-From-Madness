@@ -46,13 +46,17 @@ public class FaultyLight : MonoBehaviour {
         }
 
         if (Random.value < .05f) {
+            secondaryLight.intensity = 0.2f;
+            lampLight.intensity = 2.5f;
             lampHider.SetActive(false);
             secondaryLight.enabled = true;
             lampLight.enabled = true;
         } else {
             lampHider.SetActive(true);
-            secondaryLight.enabled = false;
-            lampLight.enabled = false;
+            secondaryLight.intensity = Random.Range(0f, 0.2f);
+            lampLight.intensity = Random.Range(0f, 2.5f);
+            /*secondaryLight.enabled = false;
+            lampLight.enabled = false;*/
         }
     }
 
@@ -62,6 +66,8 @@ public class FaultyLight : MonoBehaviour {
             lampSound.volume = 0.15f;
             lampSound.Play();
         }
+        secondaryLight.intensity = 0.2f;
+        lampLight.intensity = 2.5f;
         lampHider.SetActive(false);
         secondaryLight.enabled = true;
         lampLight.enabled = true;

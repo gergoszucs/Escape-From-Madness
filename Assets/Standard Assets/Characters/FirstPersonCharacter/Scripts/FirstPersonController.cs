@@ -57,6 +57,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			m_MouseLook.Init(transform , m_Camera.transform);
         }
 
+
         // Update is called once per frame
         private void Update()
         {
@@ -80,26 +81,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
-
-            if (Input.GetKeyDown(KeyCode.LeftShift)) {
-                m_AudioSource.volume = 0.8f;
-            }
-
-            if (Input.GetKeyUp(KeyCode.LeftShift)) {
-                m_AudioSource.volume = 0.4f;
-            }
-
-            if (Input.GetKeyDown(KeyCode.LeftControl)) {
-                m_WalkSpeed = 1f;
-                m_AudioSource.volume = 0.1f;
-                m_CharacterController.height = 0.8f;
-            }
-
-            if (Input.GetKeyUp(KeyCode.LeftControl)) {
-                m_WalkSpeed = 3f;
-                m_AudioSource.volume = 0.4f;
-                m_CharacterController.height = 1.8f;
-            }
         }
 
 
@@ -121,7 +102,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // get a normal for the surface that is being touched to move along it
             RaycastHit hitInfo;
             Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
-                               m_CharacterController.height/2f);
+                               m_CharacterController.height/2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
             desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
 
             m_MoveDir.x = desiredMove.x*speed;
@@ -149,8 +130,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
 
-            
+            m_MouseLook.UpdateCursorLock();
         }
+
 
         private void PlayJumpSound()
         {
