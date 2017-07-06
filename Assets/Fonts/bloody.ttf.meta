@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: c7023bc2a22165441bc1a21c16142c9a
+timeCreated: 1499252125
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: CF My Bloody Valentine
+  fontNames:
+  - CF My Bloody Valentine
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
