@@ -2,40 +2,31 @@
 
 public class ElectroPanel : MonoBehaviour {
 
-    public AudioClip badIdeaSound, acceptSound, switchSound, powerDown;
+    public AudioClip switchSound, powerDown;
 
     AudioSource audioPlayer;
     SwitchCollider switchCollider;
-    bool isFirstTry, isSwitched, isPowerDown;
+    SpawnRoomDoor door;
+    bool isSwitched, isPowerDown;
 
 	void Start () {
         audioPlayer = GetComponent<AudioSource>();
         switchCollider = FindObjectOfType<SwitchCollider>();
-        isFirstTry = true;
+        door = FindObjectOfType<SpawnRoomDoor>();
         isSwitched = false;
         isPowerDown = false;
 	}
 	
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.F) && !audioPlayer.isPlaying && switchCollider.IsCollidingWithPlayer()) {
-            if (isFirstTry) {
-                audioPlayer.clip = badIdeaSound;
-                audioPlayer.Play();
-                isFirstTry = false;
-            } else if(!isSwitched) {
-                audioPlayer.clip = acceptSound;
+        if (Input.GetKeyDown(KeyCode.F) && !audioPlayer.isPlaying && switchCollider.IsCollidingWithPlayer() && !door.IsActive()) {
+            if(!isSwitched) {
+                audioPlayer.clip = switchSound;
                 audioPlayer.Play();
                 isSwitched = true;
-                Invoke("Switch", acceptSound.length);
+                Invoke("PowerDown", switchSound.length);
             }
         }
 	}
-
-    void Switch() {
-        audioPlayer.clip = switchSound;
-        audioPlayer.Play();
-        Invoke("PowerDown", switchSound.length);
-    }
     
     void PowerDown() {
         audioPlayer.clip = powerDown;

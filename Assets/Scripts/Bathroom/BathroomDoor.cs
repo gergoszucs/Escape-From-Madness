@@ -20,7 +20,7 @@ public class BathroomDoor : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.F) && doorCollider.IsCollidingWithPlayer() && !isDoorOpen) {
+        if (Input.GetKeyDown(KeyCode.F) && doorCollider.IsCollidingWithPlayer() && !isDoorOpen && !isActive) {
             isActive = true;
             animator.SetTrigger("OpenDoor");
             audioPlayer.Play();

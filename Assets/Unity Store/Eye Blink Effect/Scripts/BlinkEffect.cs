@@ -31,8 +31,8 @@ namespace PostProcess
 		[Range (0f, 10f)]
 		public float fadeOutDelay = 0.0f;
 
-		float fadeInTime = 3f;
-		float fadeOutTime = 3f;
+		float fadeInTime = 1f;
+		float fadeOutTime = 1f;
 
 		public AnimationCurve fadeInCurve;
 		public AnimationCurve fadeOutCurve;
@@ -42,7 +42,7 @@ namespace PostProcess
 
 		float localTime;
 		State state;
-		bool inAndOut;
+		public bool inAndOut;
 		
 		System.Action onFadeInComplete;
 		System.Action onFadeOutComplete;
@@ -52,8 +52,8 @@ namespace PostProcess
 			standard = Shader.Find ("Hidden/Image Effects/Blink");
 			curved = Shader.Find ("Hidden/Image Effects/Blink Curved");
 
-			SetDefaultFadeInAnimationCurves ();
-			SetDefaultFadeOutAnimationCurves ();
+			SetDefaultFadeInAnimationCurves (0.6f);
+			SetDefaultFadeOutAnimationCurves (0.6f);
 			time = 1f;
 			localTime = 0f;
 			state = State.Idle;
@@ -97,15 +97,15 @@ namespace PostProcess
 		}
 		#endif
 
-		void SetDefaultFadeInAnimationCurves () 
+		public void SetDefaultFadeInAnimationCurves (float curve) 
 		{
 			Keyframe begin = new Keyframe ();
 			begin.time = 0f;
-			begin.value = 0f;
+			begin.value = 1f;
 			
 			Keyframe end = new Keyframe ();
-			end.time = 0.0459f;
-			end.value = 1f;
+			end.time = 2f;
+			end.value = curve;
 			
 			fadeInCurve = new AnimationCurve ();
 			fadeInCurve.AddKey (begin);
@@ -114,15 +114,15 @@ namespace PostProcess
 			fadeInCurve.preWrapMode = WrapMode.Clamp;
 		}
 		
-		void SetDefaultFadeOutAnimationCurves () 
+		public void SetDefaultFadeOutAnimationCurves (float curve) 
 		{
 			Keyframe begin = new Keyframe ();
 			begin.time = 0f;
-			begin.value = 1f;
+			begin.value = curve;
 			
 			Keyframe end = new Keyframe ();
-			end.time = 0.829f;
-			end.value = 0f;
+			end.time = 2f;
+			end.value = 1f;
 			
 			fadeOutCurve = new AnimationCurve ();
 			fadeOutCurve.AddKey (begin);
@@ -153,7 +153,7 @@ namespace PostProcess
 				time = fadeInCurve.Evaluate (localTime);
 				
 				if (localTime > fadeInTime) {
-					time = 1f;
+					time = 0f;
 					localTime = 0f;
 					if (inAndOut) {
 						if (fadeOutDelay == 0f) {
@@ -170,7 +170,7 @@ namespace PostProcess
 					}
 				}
 			} else if (state == State.FadingOut) {
-				time = fadeOutCurve.Evaluate (localTime);
+                time = fadeOutCurve.Evaluate (localTime);
 				
 				if (localTime > fadeOutTime) {
 					time = 0f;
@@ -196,14 +196,13 @@ namespace PostProcess
 
 		public void Blink (System.Action onComplete = null, System.Action onFadeInComplete = null)
 		{
-			inAndOut = true;
 			this.onFadeOutComplete = onComplete;
 			this.onFadeInComplete = onFadeInComplete;
 			time = 1f;
 			localTime = 0f;
 			fadeInTime = fadeInCurve [fadeInCurve.length - 1].time;
 			fadeOutTime = fadeOutCurve [fadeOutCurve.length - 1].time;
-			state = State.FadingIn;
+            state = State.FadingIn;
 		}
 		
 		public void FadeIn (System.Action onComplete = null)

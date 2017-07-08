@@ -2,34 +2,52 @@
 
 public class SpawnRoomDoor : MonoBehaviour {
 
-    public AudioClip lockedSound, lockedVoice, knockSound, fearVoice, openDoorSound;
+    public AudioClip lockedSound, knockSound, openDoorSound;
 
     AudioSource audioPlayer;
     OpenDoorCollider doorCollider;
     Animation openDoorAnimation;
     ElectroPanel electroPanel;
-    bool isFirstTry, isDoorOpen;
+    GameObject sink;
+    GameObject[] lampsToTurnOn;
+    bool isFirstTry, isDoorOpen, isActive;
 
-    void Start () {
+    void Start() {
         audioPlayer = GetComponent<AudioSource>();
         doorCollider = FindObjectOfType<OpenDoorCollider>();
         openDoorAnimation = GetComponent<Animation>();
         electroPanel = FindObjectOfType<ElectroPanel>();
+        lampsToTurnOn = GameObject.FindGameObjectsWithTag("TurnOn");
+        sink = GameObject.FindGameObjectWithTag("Sink");
+
+        foreach (GameObject light in lampsToTurnOn) {
+            light.SetActive(false);
+        }
 
         isFirstTry = true;
         isDoorOpen = false;
+        isActive = false;
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.F) && isFirstTry && doorCollider.IsCollidingWithPlayer()) {
+        if (Input.GetKeyDown(KeyCode.F) && isFirstTry && doorCollider.IsCollidingWithPlayer() && !electroPanel.IsPowerDown() && !electroPanel.IsPlayingAudio()) {
+            isActive = true;
             isFirstTry = false;
             audioPlayer.clip = lockedSound;
             audioPlayer.Play();
-            Invoke("PlayLockedReaction", lockedSound.length + 0.5f);
+            Invoke("PlayKnockOnDoor", lockedSound.length + 1.5f);
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && electroPanel.IsPowerDown() && doorCollider.IsCollidingWithPlayer()) {
-            Debug.Log(electroPanel.IsPowerDown());
+        if (Input.GetKeyDown(KeyCode.F) && electroPanel.IsPowerDown() && doorCollider.IsCollidingWithPlayer() && !isActive) {
+            isActive = true;
+            openDoorAnimation.Play();
+            audioPlayer.clip = openDoorSound;
+            audioPlayer.Play();
+            Invoke("SetDoorOpen", openDoorSound.length);
+        }
+
+        // TEMP
+        if (Input.GetKeyDown(KeyCode.P)) {
             openDoorAnimation.Play();
             audioPlayer.clip = openDoorSound;
             audioPlayer.Play();
@@ -37,25 +55,23 @@ public class SpawnRoomDoor : MonoBehaviour {
         }
     }
 
-    void PlayLockedReaction() {
-        audioPlayer.clip = lockedVoice;
-        audioPlayer.Play();
-        Invoke("PlayKnockOnDoor", lockedVoice.length + 1.5f);
-    }
-
     void PlayKnockOnDoor() {
         audioPlayer.clip = knockSound;
         audioPlayer.Play();
-        Invoke("PlayFearVoice", knockSound.length + 1.5f);
+        Invoke("SetDoorInactive", knockSound.length);
     }
 
-    void PlayFearVoice() {
-        audioPlayer.clip = fearVoice;
-        audioPlayer.Play();
+    void SetDoorInactive() {
+        isActive = false;
     }
 
     void SetDoorOpen() {
+        SetDoorInactive();
         isDoorOpen = true;
+        foreach (GameObject light in lampsToTurnOn) {
+            light.SetActive(true);
+        }
+        sink.GetComponent<AudioSource>().Play();
     }
 
     public bool IsDoorOpen() {
@@ -64,5 +80,9 @@ public class SpawnRoomDoor : MonoBehaviour {
 
     public bool HasTriedToOpen() {
         return !isFirstTry;
+    }
+
+    public bool IsActive() {
+        return isActive;
     }
 }

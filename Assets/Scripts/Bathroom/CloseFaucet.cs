@@ -6,27 +6,35 @@ public class CloseFaucet : MonoBehaviour {
 
     public Text playerMessage;
     public GameObject zombie;
-    public AudioClip closeFaucetSound, crawlerSound;
+    public AudioClip closeFaucetSound, scareSound;
 
+    GameObject[] wallTexts;
     AudioSource soundPlayer;
     GameObject player, fpsCamera;
-    Animator playerAnimator;
-    Quaternion originalRot;
+    DaughterScream screamPlayer;
     bool isColliding, faucetClosed;
+
+    void Awake() {
+        wallTexts = GameObject.FindGameObjectsWithTag("WallText");
+
+        foreach (GameObject text in wallTexts) {
+            text.SetActive(false);
+        }
+    }
 
     void Start() {
         soundPlayer = GetComponentInParent<AudioSource>();
         player = GameObject.FindGameObjectWithTag("Player");
         fpsCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        playerAnimator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
-        originalRot = player.transform.rotation;
+        screamPlayer = FindObjectOfType<DaughterScream>();
 
         isColliding = false;
         faucetClosed = false;
     }
 
     void Update() {
-        if(isColliding && Input.GetKey(KeyCode.F)) {
+        if(isColliding && Input.GetKey(KeyCode.F) && !faucetClosed) {
+
             faucetClosed = true;
             soundPlayer.clip = closeFaucetSound;
             soundPlayer.loop = false;
@@ -36,30 +44,34 @@ public class CloseFaucet : MonoBehaviour {
     }
 
     void PlayScare() {
-        player.GetComponent<FirstPersonController>().enabled = false;
-        //player.transform.rotation = Quaternion.identity;
-        //fpsCamera.transform.rotation = Quaternion.identity;
-        playerAnimator.applyRootMotion = false;
-        playerAnimator.SetTrigger("Mirror");
-        Invoke("DisableAnimator", 4f);
-        zombie.SetActive(true);
+        player.transform.position = new Vector3(66.3f, 0.98f, 57.79f);
+        player.transform.rotation = Quaternion.identity;
+        player.transform.Rotate(0, 180, 0);
+        fpsCamera.transform.rotation = Quaternion.identity;
+        fpsCamera.transform.Rotate(0, 180, 0);
 
-        Invoke("HideZombie", 2.5f);
+        player.GetComponent<FirstPersonController>().enabled = false;
+        zombie.SetActive(true);
+        Invoke("HideZombie", scareSound.length);
 
         soundPlayer.spatialBlend = 0f;
-        soundPlayer.clip = crawlerSound;
+        soundPlayer.clip = scareSound;
         soundPlayer.Play();
     }
 
     void HideZombie(){
+        player.GetComponent<FirstPersonController>().enabled = true;
         zombie.SetActive(false);
+
+        Invoke("StartScreams", 2f);
     }
 
-    void DisableAnimator() {
-        playerAnimator.applyRootMotion = true;
-        player.GetComponent<FirstPersonController>().enabled = true;
-        player.transform.rotation = originalRot;
-        //fpsCamera.transform.rotation = Quaternion.identity;
+    void StartScreams() {
+        foreach (GameObject text in wallTexts) {
+            text.SetActive(true);
+        }
+
+        screamPlayer.PlayScreams();
     }
 
     void OnTriggerStay(Collider collider) {

@@ -16,10 +16,10 @@ public class OpenDoorCollider : MonoBehaviour {
     }
 
     void OnTriggerStay(Collider collider) {
-        if (collider.tag == "Player" && (!door.HasTriedToOpen() || electroPanel.IsPowerDown()) && !door.IsDoorOpen()) {
+        if (collider.tag == "Player" && (!door.HasTriedToOpen() || electroPanel.IsPowerDown()) && !door.IsDoorOpen() && !electroPanel.IsPlayingAudio() && !door.IsActive()) {
             isColliding = true;
             playerMessage.text = "F - Open Door";
-        } else if ((door.HasTriedToOpen() && !electroPanel.IsPowerDown()) || door.IsDoorOpen()) {
+        } else if ((door.HasTriedToOpen() && !electroPanel.IsPowerDown()) || door.IsDoorOpen() || electroPanel.IsPlayingAudio() || door.IsActive()) {
             playerMessage.text = "";
         }
     }

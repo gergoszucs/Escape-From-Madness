@@ -14,10 +14,10 @@ public class PickupFlashlight : MonoBehaviour {
     }
 
     void OnTriggerStay(Collider collider) {
-        if (collider.tag == "Player" && !flashLight.HasTriedToPickup()) {
+        if (collider.tag == "Player" && !flashLight.HasPickedUp()) {
             isColliding = true;
             playerMessage.text = "F - Take Flashlight";
-        } else if (flashLight.HasTriedToPickup()) {
+        } else if (flashLight.HasPickedUp()) {
             playerMessage.text = "";
         }
     }
