@@ -2,7 +2,7 @@
 
 public class StopScreamCollider : MonoBehaviour {
 
-    public GameObject blockingStretcher;
+    public GameObject blockingStretcher, flashlightObject;
 
     Flashlight flashlight;
     DaughterScream screamPlayer;
@@ -21,8 +21,12 @@ public class StopScreamCollider : MonoBehaviour {
         if (collider.tag == "Player" && screamPlayer.GetComponent<AudioSource>().isPlaying) {
             screamPlayer.StopScreams();
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().Play();
-            hasCollided = true;
 
+            if (!hasCollided) {
+                hasCollided = true;
+                flashlightObject.SetActive(false);
+            }
+            
             if (flashlight.HasPickedUp()) {
                 Destroy(blockingStretcher);
                 chainsaw.PlayChainsawAudioAfter(5f);

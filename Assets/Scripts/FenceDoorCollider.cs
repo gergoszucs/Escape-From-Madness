@@ -6,18 +6,25 @@ public class FenceDoorCollider : MonoBehaviour {
     public Text playerMessage;
 
     FenceDoor door;
+    Chest chest;
     bool isColliding;
 
     void Start() {
         door = FindObjectOfType<FenceDoor>();
+        chest = FindObjectOfType<Chest>();
+
         isColliding = false;
     }
 
     void OnTriggerStay(Collider collider) {
         if (collider.tag == "Player" && !door.IsDoorOpen() && !door.IsActive()) {
             isColliding = true;
-            playerMessage.text = "F - Open Door";
-        } else if (door.IsDoorOpen() || door.IsActive()) {
+            if (chest.IsGunFound()) {
+                playerMessage.text = "F - Open Door";
+            } else {
+                playerMessage.text = "I need a gun before going out there";
+            }
+        } else if (collider.tag == "Player") {
             playerMessage.text = "";
         }
     }

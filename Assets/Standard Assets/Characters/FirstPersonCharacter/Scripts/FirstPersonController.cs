@@ -78,6 +78,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 charHeight = 0.6f;
             }
 
+            //if (Input.GetKey(KeyCode.LeftShift)) {
+            //    m_WalkSpeed = 6f;
+            //    m_AudioSource.volume = 0.6f;
+            //}
+
             float prevHeight = transform.localScale.y;
             transform.localScale = new Vector3(transform.localScale.x, Mathf.Lerp(transform.localScale.y, charHeight, 5 * Time.deltaTime), transform.localScale.z);
             transform.position += new Vector3(0, originalHeight / 2 * (transform.localScale.y - prevHeight), 0);

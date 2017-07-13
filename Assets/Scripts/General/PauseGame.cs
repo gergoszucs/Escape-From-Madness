@@ -5,15 +5,20 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class PauseGame : MonoBehaviour {
 
     public GameObject pauseBackground, pauseMenu, pauseOptions, volumeObject, playerMessages;
-    public GameObject resumeButton, optionsButton, menuButton, exitButton, backButton;
+    public GameObject resumeButton, optionsButton, menuButton, exitButton, backButton, fpsObject;
     public Transform player;
 
     Color originalTextColor;
     Slider volumeSlider;
+    Toggle drawFPSToggle;
 
     void Start() {
         originalTextColor = resumeButton.GetComponentInChildren<Text>().color;
         volumeSlider = volumeObject.GetComponent<Slider>();
+        drawFPSToggle = fpsObject.GetComponent<Toggle>();
+
+        volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
+        drawFPSToggle.onValueChanged.AddListener(OnDrawFPSChanged);
     }
 	
 	void Update () {
@@ -24,12 +29,14 @@ public class PauseGame : MonoBehaviour {
                 Pause();
             }
         }
-
-        volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
     }       
 
     void OnVolumeChanged(float value) {
         AudioListener.volume = volumeSlider.value;
+    }
+
+    void OnDrawFPSChanged(bool value) {
+        PlayerPrefsManager.SetDrawFPS(drawFPSToggle.isOn);
     }
 
     public void Pause() {
@@ -61,6 +68,7 @@ public class PauseGame : MonoBehaviour {
         pauseMenu.SetActive(false);
 
         volumeSlider.value = PlayerPrefsManager.GetMasterVolume();
+        drawFPSToggle.isOn = PlayerPrefsManager.GetDrawFPS();
         ResetButtonColors();
     }
 
@@ -69,6 +77,7 @@ public class PauseGame : MonoBehaviour {
         pauseMenu.SetActive(true);
 
         PlayerPrefsManager.SetMasterVolume(volumeSlider.value);
+        PlayerPrefsManager.SetDrawFPS(drawFPSToggle.isOn);
         ResetButtonColors();
     }
 

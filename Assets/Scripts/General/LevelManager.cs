@@ -17,7 +17,12 @@ public class LevelManager : MonoBehaviour {
             backgroundMusic = GetComponent<AudioSource>();
         }
 
-        if(SceneManager.GetActiveScene().buildIndex == 0) {
+        if (!PlayerPrefs.HasKey("master_volume") || PlayerPrefsManager.GetMasterVolume() > 1f) {
+            AudioListener.volume = 1f;
+            PlayerPrefs.SetFloat("master_volume", 1);
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex == 0) {
             Invoke("LoadNextLevel", 4.0f);
         }
 	}
