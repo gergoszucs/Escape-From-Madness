@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Gun : MonoBehaviour
@@ -32,7 +31,7 @@ public class Gun : MonoBehaviour
     public AnimationClip _AimOff;  //
     public AnimationClip _AimShoot;//
     public AnimationClip _AimIdle; //
-
+    
     string _idle_;
     string _reload_;
     string _shoot_;
@@ -43,7 +42,8 @@ public class Gun : MonoBehaviour
     public bool aim;// can aim
 
     void Start() {
-
+        inventoryAmmo = LevelManager.GetInventoryAmmo();
+        curAmmo = LevelManager.GetMagazineAmmo();
     }
 
     void Update() {
@@ -135,21 +135,10 @@ public class Gun : MonoBehaviour
 
             if (Physics.Raycast(camera1.position, Direction, out Hit, 10000f))
             {
-                Debug.Log("I hit " + Hit.collider.gameObject);
                 if (Hit.collider.CompareTag("Zombie"))
                 {
                     Hit.collider.gameObject.GetComponent<Zombie>().ReduceHealth();
-                }
-                Quaternion HitRotation = Quaternion.FromToRotation(Vector3.up, Hit.normal);// create bullet hole
-                if (Hit.transform.GetComponent<Rigidbody>())// if ray hit rigidbody object
-                {
-                    Hit.transform.GetComponent<Rigidbody>().AddForceAtPosition(Direction * 800, Hit.point);// object push
-                }
-                if (Hit.collider.material.staticFriction == 0.2f)
-                {
-                    Transform metalhitGO = Instantiate(metalHit, Hit.point + (Hit.normal * 0.001f), HitRotation) as Transform;//
-                    metalhitGO.transform.parent = Hit.transform;                                                              // create sparks
-                    Instantiate(MetalSparks, Hit.point + (Hit.normal * 0.01f), HitRotation);                                  //
+                    //Hit.transform.GetComponent<Rigidbody>().AddForce(Direction * 400);// object push
                 }
             }
         }
@@ -188,5 +177,13 @@ public class Gun : MonoBehaviour
     {
 
         bulletGUI.text = "" + curAmmo + "/" + inventoryAmmo;
+    }
+
+    public int GetMagazineAmmo() {
+        return curAmmo;
+    }
+
+    public int GetInventoryAmmo() {
+        return inventoryAmmo;
     }
 }

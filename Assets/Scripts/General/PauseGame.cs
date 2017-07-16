@@ -12,6 +12,8 @@ public class PauseGame : MonoBehaviour {
     Slider volumeSlider;
     Toggle drawFPSToggle;
 
+    float originalVolume;
+
     void Start() {
         originalTextColor = resumeButton.GetComponentInChildren<Text>().color;
         volumeSlider = volumeObject.GetComponent<Slider>();

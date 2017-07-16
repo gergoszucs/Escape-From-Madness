@@ -191,6 +191,7 @@
     <Compile Include="Assets\Standard Assets\Vehicles\Car\Scripts\WheelEffects.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Laptop\StandardColorMask.shader" />
     <None Include="Assets\Models\Anna\Shaders\SkinShader.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
@@ -341,6 +342,7 @@
     <None Include="Assets\Unity Store\MagicMirror\Prefab\MirrorShaderOld.shader" />
     <None Include="Assets\Unity Store\MagicMirror\Prefab\Readme.txt" />
     <None Include="Assets\Unity Store\NatureStarterKit2\info.txt" />
+    <None Include="Assets\Unity Store\Ornamental Flower Set\Shaders\Transparent-BumpSpecNoCull.shader" />
     <None Include="Assets\Unity Store\Sink, Toilet and Radiator Set\Read Me\Hello! Read Me!.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

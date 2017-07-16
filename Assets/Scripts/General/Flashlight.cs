@@ -38,7 +38,7 @@ public class Flashlight : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.X) && hasPickedUp) {
+        if (Input.GetKeyDown(KeyCode.E) && hasPickedUp) {
             if (lampLight.activeSelf) {
                 audioPlayer.clip = flashLightOff;
             } else {
@@ -51,7 +51,7 @@ public class Flashlight : MonoBehaviour {
     }
 
     void ShowFlashlightHelp() {
-        playerMessage.text = "X - Turn flashlight on/off";
+        playerMessage.text = "E - Turn flashlight on/off";
         Invoke("HideFlashlightHelp", 4f);
     }
 

@@ -5,6 +5,7 @@ public class LevelManager : MonoBehaviour {
 
     static LevelManager instance;
     AudioSource backgroundMusic;
+    static int inventoryAmmo, magazineAmmo;
 
     void Start() {
         if (instance != null) {
@@ -15,6 +16,9 @@ public class LevelManager : MonoBehaviour {
 
             AudioListener.volume = PlayerPrefsManager.GetMasterVolume();
             backgroundMusic = GetComponent<AudioSource>();
+
+            inventoryAmmo = 60;
+            magazineAmmo = 0;
         }
 
         if (!PlayerPrefs.HasKey("master_volume") || PlayerPrefsManager.GetMasterVolume() > 1f) {
@@ -25,16 +29,10 @@ public class LevelManager : MonoBehaviour {
         if (SceneManager.GetActiveScene().buildIndex == 0) {
             Invoke("LoadNextLevel", 4.0f);
         }
-	}
+    }
 
     public void LoadNextLevel() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.L)) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
     }
 
     public void LoadPreviousLevel() {
@@ -57,5 +55,21 @@ public class LevelManager : MonoBehaviour {
         if(level != 1 && level != 2) {
             backgroundMusic.Stop();
         }
+    }
+
+    public static void SetInventoryAmmo(int ammo) {
+        inventoryAmmo = ammo;
+    }
+
+    public static int GetInventoryAmmo() {
+        return inventoryAmmo;
+    }
+
+    public static void SetMagazineAmmo(int ammo) {
+        magazineAmmo = ammo;
+    }
+
+    public static int GetMagazineAmmo() {
+        return magazineAmmo;
     }
 }

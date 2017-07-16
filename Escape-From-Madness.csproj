@@ -133,11 +133,6 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
-    <Compile Include="Assets\Scripts\Chest.cs" />
-    <Compile Include="Assets\Scripts\ChestCollider.cs" />
-    <Compile Include="Assets\Scripts\FenceDoor.cs" />
-    <Compile Include="Assets\Scripts\FenceDoorCollider.cs" />
-    <Compile Include="Assets\Scripts\FlashlightOnOff.cs" />
     <Compile Include="Assets\Scripts\General\Flashlight.cs" />
     <Compile Include="Assets\Scripts\General\Intro.cs" />
     <Compile Include="Assets\Scripts\General\LevelManager.cs" />
@@ -145,15 +140,11 @@
     <Compile Include="Assets\Scripts\General\PauseGame.cs" />
     <Compile Include="Assets\Scripts\General\PlayerCamera.cs" />
     <Compile Include="Assets\Scripts\General\PlayerPrefsManager.cs" />
-    <Compile Include="Assets\Scripts\KeyCollider.cs" />
     <Compile Include="Assets\Scripts\Menus\MenuButton.cs" />
     <Compile Include="Assets\Scripts\Menus\OptionPercentage.cs" />
     <Compile Include="Assets\Scripts\Menus\OptionsController.cs" />
     <Compile Include="Assets\Scripts\Menus\PauseButton.cs" />
     <Compile Include="Assets\Scripts\Menus\PlayVideo.cs" />
-    <Compile Include="Assets\Scripts\MonsterRunCollider.cs" />
-    <Compile Include="Assets\Scripts\NextLevelCollider.cs" />
-    <Compile Include="Assets\Scripts\ScareCollider.cs" />
     <Compile Include="Assets\Scripts\Scene 1\Bathroom\BathroomDoor.cs" />
     <Compile Include="Assets\Scripts\Scene 1\Bathroom\CloseFaucet.cs" />
     <Compile Include="Assets\Scripts\Scene 1\Bathroom\OpenBathroomDoor.cs" />
@@ -176,8 +167,21 @@
     <Compile Include="Assets\Scripts\Scene 1\SpawnRoom\SpawnRoomDoor.cs" />
     <Compile Include="Assets\Scripts\Scene 1\SpawnRoom\StopScreamCollider.cs" />
     <Compile Include="Assets\Scripts\Scene 1\SpawnRoom\SwitchCollider.cs" />
-    <Compile Include="Assets\Scripts\ShedDoor.cs" />
-    <Compile Include="Assets\Scripts\ShedDoorCollider.cs" />
+    <Compile Include="Assets\Scripts\Scene 2\Chest.cs" />
+    <Compile Include="Assets\Scripts\Scene 2\ChestCollider.cs" />
+    <Compile Include="Assets\Scripts\Scene 2\FenceDoor.cs" />
+    <Compile Include="Assets\Scripts\Scene 2\FenceDoorCollider.cs" />
+    <Compile Include="Assets\Scripts\Scene 2\FlashlightOnOff.cs" />
+    <Compile Include="Assets\Scripts\Scene 2\KeyCollider.cs" />
+    <Compile Include="Assets\Scripts\Scene 2\MonsterRunCollider.cs" />
+    <Compile Include="Assets\Scripts\Scene 2\NextLevelCollider.cs" />
+    <Compile Include="Assets\Scripts\Scene 2\ScareCollider.cs" />
+    <Compile Include="Assets\Scripts\Scene 2\ShedDoor.cs" />
+    <Compile Include="Assets\Scripts\Scene 2\ShedDoorCollider.cs" />
+    <Compile Include="Assets\Scripts\Scene 3\ForestSoundManager.cs" />
+    <Compile Include="Assets\Scripts\Scene 3\Zombie.cs" />
+    <Compile Include="Assets\Scripts\Scene 3\ZombieController.cs" />
+    <Compile Include="Assets\Scripts\Scene 4\CameraController.cs" />
     <Compile Include="Assets\Unity Store\Eye Blink Effect\Scripts\BlinkEffect.cs" />
     <Compile Include="Assets\Unity Store\FPS Counter\Scripts\FPS.cs" />
     <Compile Include="Assets\Unity Store\FPS Starter Kit - Lite\Scripts\ArenaControl.cs" />
@@ -193,9 +197,9 @@
     <Compile Include="Assets\Unity Store\MagicMirror\Prefab\MirrorCameraScript.cs" />
     <Compile Include="Assets\Unity Store\MagicMirror\Prefab\MirrorReflectionScript.cs" />
     <Compile Include="Assets\Unity Store\MagicMirror\Prefab\MirrorScript.cs" />
-    <Compile Include="Assets\Zombie.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Laptop\StandardColorMask.shader" />
     <None Include="Assets\Models\Anna\Shaders\SkinShader.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
@@ -346,6 +350,7 @@
     <None Include="Assets\Unity Store\MagicMirror\Prefab\MirrorShaderOld.shader" />
     <None Include="Assets\Unity Store\MagicMirror\Prefab\Readme.txt" />
     <None Include="Assets\Unity Store\NatureStarterKit2\info.txt" />
+    <None Include="Assets\Unity Store\Ornamental Flower Set\Shaders\Transparent-BumpSpecNoCull.shader" />
     <None Include="Assets\Unity Store\Sink, Toilet and Radiator Set\Read Me\Hello! Read Me!.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

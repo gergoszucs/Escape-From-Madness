@@ -45,14 +45,6 @@ public class SpawnRoomDoor : MonoBehaviour {
             audioPlayer.Play();
             Invoke("SetDoorOpen", openDoorSound.length);
         }
-
-        // TEMP
-        if (Input.GetKeyDown(KeyCode.P)) {
-            openDoorAnimation.Play();
-            audioPlayer.clip = openDoorSound;
-            audioPlayer.Play();
-            Invoke("SetDoorOpen", openDoorSound.length);
-        }
     }
 
     void PlayKnockOnDoor() {
